@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>W List</title>
+		<link rel="stylesheet" type="text/css" href="test.css">
+	</head>
+	<body>
+		<section class="listapp">
+			<header class="header">
+				<h1>Lists</h1>
+				<input class="new-list"
+				autofocus autocomplete="off"
+				placeholder="What needs to watch?"
+				v-model="newList"
+				@keyup.enter="addList">
+			</header>
+			<section class="main" v-show="lists.length" v-cloak>
+				<ul class="list-list">
+					<li v-for="list in filteredLists"
+					class="list"
+					:key="list.id"
+					:class="{ end: list.end, editing: list == editedList }">
+						<div class="view">
+							<input class="toggle" type="checkbox" v-model="list.end">
+							<div class="label">
+								<label @dblclick="editList(list)">{{ list.title }}</label>
+								<label class="process">{{ list.process }}</label>
+								<button class="sub" @click="subProcess(list)" v-show="!list.end"></button>
+								<button class="add" @click="addProcess(list)" v-show="!list.end"></button>
+							</div>
+							<button class="destroy" @click="removeList(list)"></button>
+						</div>
+						<input class="edit" type="text"
+						v-model="list.title"
+						v-list-focus="list == editedList"
+						@blur="doneEdit(list)"
+						@keyup.enter="doneEdit(list)"
+						@keyup.esc="cancelEdit(list)">
+					</li>
+				</ul>
+		  	</section>
+		  	<footer class="footer" v-show="lists.length" v-cloak>
+		  		<span class="list-count">
+		  			<strong>{{ filteredLists.length }}</strong> {{ filteredLists.length | pluralize }}
+		  		</span>
+		  		<ul class="filters">
+		  			<li><a href="#/all" :class="{ selected: visibility == 'all' }">All</a></li>
+		  			<li><a href="#/watching" :class="{ selected: visibility == 'watching' }">Watching</a></li>
+		  			<li><a href="#/end" :class="{ selected: visibility == 'end' }">End</a></li>
+		  		</ul>
+		  	</footer>
+		</section>
+		<footer class="info">
+		  <p>Double-click to edit a list</p>
+		</footer>
+		<script src="vue.js"></script>
+		<script src="test.vue"></script>
+	</body>
+</html>
