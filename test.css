@@ -393,6 +393,10 @@ body {
 	.filters {
 		bottom: 10px;
 	}
+	
+	.list-list li.editing .edit {
+		width: 200px;
+	}
 }
 
 [v-cloak] { display: none; }
