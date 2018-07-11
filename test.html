@@ -23,7 +23,7 @@
 						<div class="view">
 							<input class="toggle" type="checkbox" v-model="list.end">
 							<div class="label">
-								<label @dblclick="editList(list)">{{ list.title }}</label>
+								<label @click="editList(list)">{{ list.title }}</label>
 								<label class="process">{{ list.process }}</label>
 								<button class="sub" @click="subProcess(list)" v-show="!list.end"></button>
 								<button class="add" @click="addProcess(list)" v-show="!list.end"></button>

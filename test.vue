@@ -82,6 +82,9 @@ var app = new Vue({
     },
 
     editList: function (list) {
+      if(list.end) {
+      	return
+      }
       this.beforeEditCache = list.title
       this.editedList = list
     },
