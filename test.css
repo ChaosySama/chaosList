@@ -33,6 +33,10 @@ body {
 	font-weight: 300;
 }
 
+.header {
+	user-select: none;
+}
+
 :focus {
 	outline: 0;
 }
@@ -151,9 +155,9 @@ body {
 	text-align: center;
 	width: 40px;
 	/* auto, since non-WebKit browsers doesn't support input styling */
-	height: auto;
+	height: 50%;
 	position: absolute;
-	top: 0;
+	top: -10%;
 	bottom: 0;
 	margin: auto 0;
 	border: none; /* Mobile Safari */
@@ -171,113 +175,24 @@ body {
 
 .list-list li .label {
 	word-break: break-all;
-	padding: 15px 60px 15px 15px;
+	padding: 15px;
 	margin-left: 45px;
 	display: flex;
 	justify-content: space-between;
 	line-height: 1.2;
 	transition: color 0.4s;
-	margin-right: 50px;
+	margin-right: 2%;
 }
 
-.list-list li .label > label {
-	width: 65%;
-}
 
 .list-list li .label .process {
-	position: absolute;
-	top: 0;
-	right: 120px;
-	bottom: 0;
-	width: 50px;
-	height: 30px;
-	margin: auto 0;
-	font-size: 25px;
-	margin-bottom: 15px;
 	user-select: none;
+	min-width: 40px;
 }
-
-.list-list li .label .sub {
-	margin-left: 10px;
-	display: none;
-	font-size: 23px;
-	color: grey;
-	transition: color 0.2s ease-out;
-	position: absolute;
-	top: 0;
-	right: 95px;
-	bottom: 0;
-	width: 30px;
-	height: 50%;
-	margin: auto 0;
-	margin-bottom: 15px;
-	user-select: none;
-}
-
-.list-list li .label .add {
-	margin-left: 20px;
-	display: none;
-	font-size: 23px;
-	color: grey;
-	transition: color 0.2s ease-out;
-	position: absolute;
-	top: 0;
-	right: 70px;
-	bottom: 0;
-	width: 30px;
-	height: 50%;
-	margin: auto 0;
-	margin-bottom: 15px;
-	user-select: none;
-}
-
-.list-list li .label:hover .sub {
-	display: inline-block;
-}
-
-.list-list li .label:hover .add {
-	display: inline-block;
-}
-
-.list-list li .label .sub:after {
-	content: "-"
-}
-
-.list-list li .label .add:after {
-	content: "+"
-}
-
 
 .list-list li.end .label {
 	color: #d9d9d9;
 	text-decoration: line-through;
-}
-
-.list-list li .destroy {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 10px;
-	bottom: 0;
-	width: 40px;
-	height: 50%;
-	margin: auto 0;
-	font-size: 30px;
-	color: #cc9a9a;
-	margin-bottom: 15px;
-	transition: color 0.2s ease-out;
-}
-
-.list-list li .destroy:hover {
-	color: #af5b5e;
-}
-
-.list-list li .destroy:after {
-	content: 'x';
-}
-
-.list-list li:hover .destroy {
-	display: block;
 }
 
 .list-list li .edit {
@@ -286,6 +201,27 @@ body {
 
 .list-list li.editing:last-child {
 	margin-bottom: -1px;
+}
+
+.list-list li .tools {
+	border-top: 1px solid #ededed;
+	font-size: 20px;
+	height: 4%;
+	display: flex;
+	justify-content: space-around;
+	alien-items: center;
+	transition: all 0.4s;
+	user-select: none;
+}
+
+.list-list li .tools button {
+	width: 25%;
+	line-height: 1;
+	border-right: 1px solid #ededed;
+}
+
+.list-list li .tools button:last-child {
+	border-right: none;
 }
 
 .footer {
@@ -365,10 +301,6 @@ body {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	.list-list li .toggle {
 		background: none;
-	}
-
-	.list-list li .toggle {
-		height: 40px;
 	}
 }
 

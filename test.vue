@@ -6,6 +6,7 @@ var listStorage = {
     var lists = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
     lists.forEach(function (list, index) {
       list.id = index
+      list.func = false
     })
     listStorage.uid = lists.length
     return lists
@@ -52,6 +53,9 @@ var app = new Vue({
 
   computed: {
     filteredLists: function () {
+      for(l of this.lists) {
+      	l.func = false
+      }
       return filters[this.visibility](this.lists)
     }
   },
@@ -72,9 +76,14 @@ var app = new Vue({
         id: listStorage.uid++,
         title: value,
         process: 1,
-        end: false
+        end: false,
+        func: false
       })
       this.newList = ''
+    },
+
+    change: function (list) {
+    	list.func = false
     },
 
     removeList: function (list) {
@@ -82,11 +91,20 @@ var app = new Vue({
     },
 
     editList: function (list) {
+      list.func = false
+      this.beforeEditCache = list.title
+      this.editedList = list
+    },
+
+    toggleTools: function (list) {
       if(list.end) {
       	return
       }
-      this.beforeEditCache = list.title
-      this.editedList = list
+      for(l of this.lists) {
+      	if(l == list) continue
+      	l.func = false
+      }
+      list.func = !list.func
     },
 
     doneEdit: function (list) {
@@ -119,6 +137,12 @@ var app = new Vue({
 	  }
       list.process += 1; 
     },
+
+    cancelTool: function () {
+      for(l of this.lists) {
+      	l.func = false
+      }
+    }
 
   },
 

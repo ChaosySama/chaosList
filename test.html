@@ -21,14 +21,17 @@
 					:key="list.id"
 					:class="{ end: list.end, editing: list == editedList }">
 						<div class="view">
-							<input class="toggle" type="checkbox" v-model="list.end">
+							<input class="toggle" type="checkbox" v-model="list.end" @change="change(list)">
 							<div class="label">
-								<label @dbclick="editList(list)">{{ list.title }}</label>
+								<label @click="toggleTools(list)">{{ list.title }}</label>
 								<label class="process">{{ list.process }}</label>
-								<button class="sub" @click="subProcess(list)" v-show="!list.end"></button>
-								<button class="add" @click="addProcess(list)" v-show="!list.end"></button>
 							</div>
-							<button class="destroy" @click="removeList(list)"></button>
+						</div>
+						<div class="tools" v-show="list.func">
+							<button @click="editList(list)">Modify</button>
+							<button @click="removeList(list)">Delete</button>
+							<button @click="subProcess(list)">Sub</button>
+							<button @click="addProcess(list)">Add</button>
 						</div>
 						<input class="edit" type="text"
 						v-model="list.title"
