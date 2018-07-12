@@ -92,8 +92,11 @@ var app = new Vue({
 
     editList: function (list) {
       list.func = false
-      this.beforeEditCache = list.title
-      this.editedList = list
+      this.listCache = list
+      setTimeout(function(){
+        this.beforeEditCache = this.listCache.title
+        this.editedList = this.listCache
+      }.bind(this),500) 
     },
 
     toggleTools: function (list) {

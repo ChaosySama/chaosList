@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>W List</title>
+		<title>Chaos List</title>
 		<link rel="stylesheet" type="text/css" href="test.css">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 	</head>
@@ -27,12 +27,14 @@
 								<label class="process">{{ list.process }}</label>
 							</div>
 						</div>
-						<div class="tools" v-show="list.func">
-							<button @click="editList(list)">Modify</button>
-							<button @click="removeList(list)">Delete</button>
-							<button @click="subProcess(list)">Sub</button>
-							<button @click="addProcess(list)">Add</button>
-						</div>
+						<transition name="fade">
+							<div class="tools" v-show="list.func">
+								<button @click="editList(list)">Modify</button>
+								<button @click="removeList(list)">Delete</button>
+								<button @click="subProcess(list)">Sub</button>
+								<button @click="addProcess(list)">Add</button>
+							</div>
+						</transition>
 						<input class="edit" type="text"
 						v-model="list.title"
 						v-list-focus="list == editedList"
@@ -54,7 +56,7 @@
 		  	</footer>
 		</section>
 		<footer class="info">
-		  <p>Double-click to edit a list</p>
+		  <p>Click to show a tool panel</p>
 		</footer>
 		<script src="vue.js"></script>
 		<script src="test.vue"></script>
