@@ -34,15 +34,15 @@
 								<button @click="editList(list)">Modify</button>
 								<button @click="removeList(list)">Delete</button>
 								<button 
-								@mousedown="!isMobile && mouseDown(list,false)" 
-								@mouseup="!isMobile && mouseUp"
-								@touchstart="isMobile && mouseDown(list,false)"
-								@touchend="isMobile && mouseUp">Sub</button>
+								@mousedown="isMobile?'':mouseDown(list,false)" 
+								@mouseup="isMobile?'':mouseUp"
+								@touchstart="isMobile?mouseDown(list,false):''"
+								@touchend="isMobile?mouseUp:''">Sub</button>
 								<button 
-								@mousedown="!isMobile && mouseDown(list,true)" 
-								@mouseup="!isMobile && mouseUp"
-								@touchstart="isMobile && mouseDown(list,true)"
-								@touchend="isMobile && mouseUp">Add</button>
+								@mousedown="isMobile?'':mouseDown(list,true)" 
+								@mouseup="isMobile?'':mouseUp"
+								@touchstart="isMobile?mouseDown(list,true):''"
+								@touchend="isMobile?mouseUp:''">Add</button>
 							</div>
 						</transition>
 						<input class="edit" type="text"
