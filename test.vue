@@ -168,6 +168,7 @@ var app = new Vue({
     },
 
     mouseDown: function (list,flag) {
+      if(this.isMobile()) return
       var interval = 130
 	  this.timerFlag = false
 	  this.setTimer(interval,list,flag)
@@ -175,6 +176,13 @@ var app = new Vue({
 
     mouseUp: function () {
       this.timerFlag = true
+    },
+
+    touchStart: function (list,flag) {
+      if(!this.isMobile()) return
+      var interval = 130
+	  this.timerFlag = false
+	  this.setTimer(interval,list,flag)
     },
 
     setTimer: function(interval,list,flag) {
