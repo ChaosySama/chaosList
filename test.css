@@ -185,6 +185,9 @@ body {
 	margin-right: 2%;
 }
 
+.list-list li .label .title {
+	width: 100%;
+}
 
 .list-list li .label .process {
 	user-select: none;

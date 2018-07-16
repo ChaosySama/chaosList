@@ -145,6 +145,37 @@ var app = new Vue({
       for(l of this.lists) {
       	l.func = false
       }
+    },
+
+    drag:function(event){
+    	var label = event.target.firstChild.lastChild.firstChild.innerHTML
+    	event.dataTransfer.setData("Text", label.toString())
+    },
+
+    drop:function(event){
+    	var data = event.dataTransfer.getData("Text")
+    	var label = event.target.innerHTML
+    	if(data == label) return
+    	var v1,v2
+    	for(i of this.lists) {
+    		if(data == i.title){
+    			v1 = i
+    		}
+    		if(label == i.title){
+    			v2 = i
+    		}
+    	}
+    	var idx1 = this.lists.indexOf(v1)
+    	var idx2 = this.lists.indexOf(v2)
+    	var tempid = v1.id
+    	v1.id = v2.id
+    	v2.id = tempid
+    	this.lists.splice(idx1, 1, v2)
+    	this.lists.splice(idx2, 1, v1)
+    },
+    
+    allowDrop:function(event){
+    	event.preventDefault()
     }
 
   },
@@ -152,6 +183,45 @@ var app = new Vue({
   directives: {
     'list-focus': function (el) {
     	el.focus()
+    },
+    // v-longtouch="list.title"
+    // v-longtouch.self="{test: '123'}"
+    'longtouch': function (el, binding) {
+    	var oDiv = el,
+            value = binding.value,
+            x = 0, y = 0, z = 0, timer = null;
+        oDiv.addEventListener("touchstart",function(e) {
+            if(e.touches.length > 1) {
+                return false;
+            }
+            z = 0;
+            timer =  setTimeout(function() {
+                z = 1;
+            }, 500);
+            x = e.touches[0].clientX;
+            y = e.touches[0].clientY;
+            e.preventDefault();
+        }, false);
+        document.addEventListener("touchmove", function(e) {
+           if(x != e.touches[0].clientX || y!= e.touches[0].clientY) {
+            clearTimeout(timer);
+            return false;
+           }
+        }, false);
+        document.addEventListener("touchend", function(ev) {
+            if(z != 1) {
+                clearTimeout(timer);
+                x = 0;
+                y = 0;
+                return false;
+           } else {
+                x = 0;
+                y = 0;
+                z= 0;
+                console.log("long touch")
+                console.log(value)
+           }
+        }, false);
     }
   }
 })
