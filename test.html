@@ -30,7 +30,7 @@
 							</div>
 						</div>
 						<transition name="fade">
-							<div class="tools" draggable="false" v-show="list.func">
+							<div class="tools" v-show="list.func">
 								<button @click="editList(list)">Modify</button>
 								<button @click="removeList(list)">Delete</button>
 								<button 
@@ -40,7 +40,9 @@
 								@touchend="mouseUp">Sub</button>
 								<button 
 								@mousedown="mouseDown(list,true)" 
-								@mouseup="mouseUp">Add</button>
+								@mouseup="mouseUp"
+								@touchstart="mouseDown(list,true)"
+								@touchend="mouseUp">Add</button>
 							</div>
 						</transition>
 						<input class="edit" type="text"
