@@ -20,9 +20,9 @@
 					class="list"
 					:key="list.id"
 					:class="{ end: list.end, editing: list == editedList }"
-					draggable="true"
+
 					@dragstart='drag($event)'>
-						<div class="view">
+						<div class="view" draggable="true">
 							<input class="toggle" type="checkbox" v-model="list.end" @change="change(list)">
 							<div class="label" @click="toggleTools(list)">
 								<label class="title" @drop='drop($event)' @dragover='allowDrop($event)'>{{ list.title }}</label>
@@ -30,11 +30,11 @@
 							</div>
 						</div>
 						<transition name="fade">
-							<div class="tools" v-show="list.func">
+							<div class="tools" draggable="false" v-show="list.func">
 								<button @click="editList(list)">Modify</button>
 								<button @click="removeList(list)">Delete</button>
-								<button @click="subProcess(list)">Sub</button>
-								<button @click="addProcess(list)">Add</button>
+								<button @mousedown="mouseDown(list,false)" @mouseup="mouseUp">Sub</button>
+								<button @mousedown="mouseDown(list,true)" @mouseup="mouseUp">Add</button>
 							</div>
 						</transition>
 						<input class="edit" type="text"

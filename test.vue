@@ -38,7 +38,8 @@ var app = new Vue({
     lists: listStorage.fetch(),
     newList: '',
     editedList: null,
-    visibility: 'all'
+    visibility: 'all',
+    timerFlag: false
   },
 
   // watch lists change for localStorage persistence
@@ -77,7 +78,7 @@ var app = new Vue({
         title: value,
         process: 1,
         end: false,
-        func: false
+        func: false,
       })
       this.newList = ''
     },
@@ -126,102 +127,111 @@ var app = new Vue({
       list.title = this.beforeEditCache
     },
 
-	subProcess: function (list) {
-	  if (!list.process || list.process <= 1) {
-	  	list.process = 1;
-	  	return
-	  }
-      list.process -= 1; 
-    },
-
-    addProcess: function (list) {
-	  if (!list.process) {
-	  	return
-	  }
-      list.process += 1; 
-    },
-
     cancelTool: function () {
       for(l of this.lists) {
       	l.func = false
       }
     },
 
-    drag:function(event){
-    	var label = event.target.firstChild.lastChild.firstChild.innerHTML
-    	event.dataTransfer.setData("Text", label.toString())
+    drag: function (event) {
+      var label = event.target.lastChild.firstChild.innerHTML
+      event.dataTransfer.setData("Text", label.toString())
     },
 
-    drop:function(event){
-    	var data = event.dataTransfer.getData("Text")
-    	var label = event.target.innerHTML
-    	if(data == label) return
-    	var v1,v2
-    	for(i of this.lists) {
-    		if(data == i.title){
-    			v1 = i
-    		}
-    		if(label == i.title){
-    			v2 = i
-    		}
-    	}
-    	var idx1 = this.lists.indexOf(v1)
-    	var idx2 = this.lists.indexOf(v2)
-    	var tempid = v1.id
-    	v1.id = v2.id
-    	v2.id = tempid
-    	this.lists.splice(idx1, 1, v2)
-    	this.lists.splice(idx2, 1, v1)
+    drop: function (event) {
+      var data = event.dataTransfer.getData("Text")
+      var label = event.target.innerHTML
+      if(data == label) return
+      var v1,v2
+      for(i of this.lists) {
+        if(data == i.title) v1 = i
+        if(label == i.title) v2 = i
+      }
+      var idx1 = this.lists.indexOf(v1)
+      var idx2 = this.lists.indexOf(v2)
+      var tempid = v1.id
+      v1.id = v2.id
+      v2.id = tempid
+      this.lists.splice(idx1, 1, v2)
+      this.lists.splice(idx2, 1, v1)
     },
-    
-    allowDrop:function(event){
-    	event.preventDefault()
-    }
+
+    allowDrop: function (event) {
+      event.preventDefault()
+    },
+
+    mouseDown: function (list,flag) {
+      var interval = 130
+	  this.timerFlag = false
+	  this.setTimer(interval,list,flag)
+    },
+
+    mouseUp: function () {
+      this.timerFlag = true
+    },
+
+    setTimer: function(interval,list,flag) {
+    	var inter
+    	if(interval > 100) {
+    		inter = Math.floor(parseInt(interval)-10)
+    	}else if(interval > 40) {
+    		inter = Math.floor(parseInt(interval)-5)
+    	}else {
+    		inter = 40
+    	}
+    	var tempTimer = setTimeout(function() {
+    		flag ? list.process++ : list.process--
+    	}, inter)
+    	setTimeout(function(){
+    		if(this.timerFlag) return
+    		this.setTimer(inter,list,flag)
+    	}.bind(app),interval)
+    },
 
   },
 
   directives: {
     'list-focus': function (el) {
-    	el.focus()
+      el.focus()
     },
     // v-longtouch="list.title"
     // v-longtouch.self="{test: '123'}"
     'longtouch': function (el, binding) {
-    	var oDiv = el,
-            value = binding.value,
-            x = 0, y = 0, z = 0, timer = null;
-        oDiv.addEventListener("touchstart",function(e) {
-            if(e.touches.length > 1) {
-                return false;
-            }
-            z = 0;
-            timer =  setTimeout(function() {
-                z = 1;
-            }, 500);
-            x = e.touches[0].clientX;
-            y = e.touches[0].clientY;
-            e.preventDefault();
-        }, false);
-        document.addEventListener("touchmove", function(e) {
-           if(x != e.touches[0].clientX || y!= e.touches[0].clientY) {
-            clearTimeout(timer);
-            return false;
-           }
-        }, false);
-        document.addEventListener("touchend", function(ev) {
-            if(z != 1) {
-                clearTimeout(timer);
-                x = 0;
-                y = 0;
-                return false;
-           } else {
-                x = 0;
-                y = 0;
-                z= 0;
-                console.log("long touch")
-                console.log(value)
-           }
-        }, false);
+      var oDiv = el,
+        value = binding.value,
+        x = 0, y = 0, z = 0, timer = null;
+      oDiv.addEventListener("touchstart",function(e) {
+        if(e.touches.length > 1) {
+          return false;
+        }
+        z = 0;
+        timer =  setTimeout(function() {
+          z = 1;
+        }, 500);
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+        e.preventDefault();
+      }, false);
+      document.addEventListener("touchmove", function(e) {
+        if(x != e.touches[0].clientX || y!= e.touches[0].clientY) {
+          clearTimeout(timer);
+          return false;
+        }
+      }, false);
+      document.addEventListener("touchend", function(ev) {
+        if(z != 1) {
+          clearTimeout(timer);
+          x = 0;
+          y = 0;
+          return false;
+        } else {
+          x = 0;
+          y = 0;
+          z= 0;
+          console.log("long touch")
+          console.log(value)
+        }
+      }, false);
     }
   }
 })

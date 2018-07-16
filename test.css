@@ -191,7 +191,8 @@ body {
 
 .list-list li .label .process {
 	user-select: none;
-	min-width: 40px;
+	min-width: 60px;
+	text-align: center;
 }
 
 .list-list li.end .label {
