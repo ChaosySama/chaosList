@@ -33,8 +33,16 @@
 							<div class="tools" draggable="false" v-show="list.func">
 								<button @click="editList(list)">Modify</button>
 								<button @click="removeList(list)">Delete</button>
-								<button @mousedown="mouseDown(list,false)" @mouseup="mouseUp">Sub</button>
-								<button @mousedown="mouseDown(list,true)" @mouseup="mouseUp">Add</button>
+								<button 
+								@mousedown="mouseDown(list,false)" 
+								@mouseup="mouseUp"
+								@touchstart="mouseDown(list,false)"
+								@touchend="mouseUp">Sub</button>
+								<button 
+								@mousedown="mouseDown(list,true)" 
+								@mouseup="mouseUp"
+								@touchstart="mouseDown(list,true)"
+								@touchend="mouseUp">Add</button>
 							</div>
 						</transition>
 						<input class="edit" type="text"
