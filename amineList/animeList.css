@@ -1,0 +1,115 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-size: 100%;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-weight: inherit;
+	color: inherit;
+	-webkit-appearance: none;
+	appearance: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height: 1.4em;
+	background: #f5f5f5;
+	color: #4d4d4d;
+	width: 1085px;
+	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 300;
+}
+
+:focus {
+	outline: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.listapp {
+	margin: 130px 0 40px 0;
+	position: relative;
+}
+
+
+.list-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+
+.list-list li {
+	width: 100%;
+
+}
+
+.list-list .list .day {
+	height: 100px;
+	font-size: 24px;
+	text-align: center;
+	line-height: 4;
+	color: white;
+	border: 1px solid #ededed;
+}
+
+.list-list .list .item {
+	position: relative;
+	height: 140px;
+	text-align: center;
+	border: 1px solid #ededed;
+}
+
+
+.list-list .list .item label {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 19px;
+	width: 100%;
+	color: #d6cccc;
+	background-color: rgba(0,0,0,0.7);
+	overflow: hidden;
+	opacity: 0.8;
+	transition: all 0.5s;
+}
+
+.list-list .list .item label:hover {
+	height: auto;
+}
+
+.list-list .list .item label .info {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+}
+
+.list-list .list .item label .info .ivu-rate {
+	font-size: 15px;
+}
+
+.list-list .list .item label .info .ivu-rate-star {
+	margin-right: 1px; 
+}
+
+.list-list .list .item label .info span {
+	font-size: 13px;
+}
+
+[v-cloak] { display: none; }

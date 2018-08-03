@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>List</title>		
+		<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+		<link rel="stylesheet" type="text/css" href="animeList.css">
+		<script src="vue.js"></script>
+    	<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+		<meta charset="utf-8" /> 
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	</head>
+	<body>
+		<section class="listapp" v-cloak>
+			<ul class="list-list">
+				<li v-for="(list,idx) in lists"
+				class="list">
+					<div class="day" :style="{backgroundColor: color[idx]}">{{list.day}}</div>
+					<div class="item" v-for="i in list.item" 
+					:style="{background: i.img + '50% 20%'}">
+						<label>{{i.title}}
+							<div class="info" v-if="i.rate!='no'">
+								<Rate alt="i.rate" disabled v-model="i.rate/2"></Rate>
+								<span>{{i.votes | votes}}</span>
+							</div>
+						</label>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<script src="animeList.vue"></script>
+	</body>
+</html>

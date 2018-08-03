@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>Chaos List</title>
+		<link rel="stylesheet" type="text/css" href="wList.css">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	</head>
+	<body>
+		<section class="listapp">
+			<header class="header">
+				<h1>Lists</h1>
+				<input class="new-list"
+				autofocus autocomplete="off"
+				placeholder="What needs to watch?"
+				v-model="newList"
+				@keyup.enter="addList">
+			</header>
+			<section class="main" v-show="lists.length" v-cloak>
+				<ul class="list-list">
+					<li v-for="list in filteredLists"
+					class="list"
+					:key="list.id"
+					:class="{ end: list.end, editing: list == editedList }"
+
+					@dragstart='drag($event)'>
+						<div class="view" draggable="true">
+							<input class="toggle" type="checkbox" v-model="list.end" @change="change(list)">
+							<div class="label" @click="toggleTools(list)">
+								<label class="title" @drop='drop($event)' @dragover='allowDrop($event)'>{{ list.title }}</label>
+								<label class="process">{{ list.process }}</label>
+							</div>
+						</div>
+						<transition name="fade">
+							<div class="tools" v-show="list.func">
+								<button @click="editList(list)">Modify</button>
+								<button @click="removeList(list)">Delete</button>
+								<button 
+								@mousedown="mouseDown(list,false)" 
+								@mouseup="mouseUp"
+								@touchstart="touchStart(list,false)"
+								@touchend="mouseUp">Sub</button>
+								<button 
+								@mousedown="mouseDown(list,true)" 
+								@mouseup="mouseUp"
+								@touchstart="touchStart(list,true)"
+								@touchend="mouseUp">Add</button>
+							</div>
+						</transition>
+						<input class="edit" type="text"
+						v-model="list.title"
+						v-list-focus="list == editedList"
+						@blur="doneEdit(list)"
+						@keyup.enter="doneEdit(list)"
+						@keyup.esc="cancelEdit(list)">
+					</li>
+				</ul>
+		  	</section>
+		  	<footer class="footer" v-show="lists.length" v-cloak>
+		  		<span class="list-count">
+		  			<strong>{{ filteredLists.length }}</strong> {{ filteredLists.length | pluralize }}
+		  		</span>
+		  		<ul class="filters">
+		  			<li><a href="#/all" :class="{ selected: visibility == 'all' }">All</a></li>
+		  			<li><a href="#/watching" :class="{ selected: visibility == 'watching' }">Watching</a></li>
+		  			<li><a href="#/end" :class="{ selected: visibility == 'end' }">End</a></li>
+		  		</ul>
+		  	</footer>
+		</section>
+		<footer class="info">
+		  <p>Click to show a tool panel</p>
+		</footer>
+		<script src="vue.js"></script>
+		<script src="wList.vue"></script>
+	</body>
+</html>
